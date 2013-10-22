@@ -60,7 +60,7 @@ func (a *Token) Equal(b *Token) bool {
 }
 
 const (
-	RUNE_CHAR              string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-,"
+	RUNE_CHAR              string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-,/"
 	RUNE_SPACE             string = " \t\r\n"
 	RUNE_ESCAPING_QUOTE    string = "\""
 	RUNE_NONESCAPING_QUOTE string = "'"
@@ -263,7 +263,7 @@ SCAN:
 					}
 				default:
 					{
-						return nil, errors.New(fmt.Sprintf("Uknown rune: %v", nextRune))
+						return nil, errors.New(fmt.Sprintf("Unknown rune: %v", nextRune))
 					}
 				}
 			}

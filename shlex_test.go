@@ -92,9 +92,43 @@ func TestLexer(t *testing.T) {
 	}
 }
 
-func TestSplit(t *testing.T) {
+func TestSplitSimple(t *testing.T) {
 	testInput := "one two three"
 	expectedOutput := []string{"one", "two", "three"}
+	foundOutput, err := Split(testInput)
+	if err != nil {
+		t.Error("Split returned error:", err)
+	}
+	if len(expectedOutput) != len(foundOutput) {
+		t.Error("Split expected:", len(expectedOutput), "results. Found:", len(foundOutput), "results")
+	}
+	for i := range foundOutput {
+		if foundOutput[i] != expectedOutput[i] {
+			t.Error("Item:", i, "(", foundOutput[i], ") differs from the expected value:", expectedOutput[i])
+		}
+	}
+}
+
+func TestSplitEscapingQuotes(t *testing.T) {
+	testInput := "one \"two three\" four"
+	expectedOutput := []string{"one", "two three", "four"}
+	foundOutput, err := Split(testInput)
+	if err != nil {
+		t.Error("Split returned error:", err)
+	}
+	if len(expectedOutput) != len(foundOutput) {
+		t.Error("Split expected:", len(expectedOutput), "results. Found:", len(foundOutput), "results")
+	}
+	for i := range foundOutput {
+		if foundOutput[i] != expectedOutput[i] {
+			t.Error("Item:", i, "(", foundOutput[i], ") differs from the expected value:", expectedOutput[i])
+		}
+	}
+}
+
+func TestSplitNonEscapingQuotes(t *testing.T) {
+	testInput := "one 'two three' four"
+	expectedOutput := []string{"one", "two three", "four"}
 	foundOutput, err := Split(testInput)
 	if err != nil {
 		t.Error("Split returned error:", err)
