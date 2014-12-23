@@ -126,6 +126,24 @@ func TestSplitEscapingQuotes(t *testing.T) {
 	}
 }
 
+func TestGlobbingExpressions(t *testing.T) {
+	testInput := "onefile *file one?ile onefil[de]"
+	expectedOutput := []string{"onefile", "*file", "one?ile", "onefil[de]"}
+	foundOutput, err := Split(testInput)
+	if err != nil {
+		t.Error("Split returned error", err)
+	}
+	if len(expectedOutput) != len(foundOutput) {
+		t.Error("Split expected:", len(expectedOutput), "results. Found:", len(foundOutput), "results")
+	}
+	for i := range foundOutput {
+		if foundOutput[i] != expectedOutput[i] {
+			t.Error("Item:", i, "(", foundOutput[i], ") differs from the expected value:", expectedOutput[i])
+		}
+	}
+
+}
+
 func TestSplitNonEscapingQuotes(t *testing.T) {
 	testInput := "one 'two three' four"
 	expectedOutput := []string{"one", "two three", "four"}
